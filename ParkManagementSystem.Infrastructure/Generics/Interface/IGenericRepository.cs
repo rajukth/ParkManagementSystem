@@ -7,6 +7,10 @@ public interface IGenericRepository <T> where T : class
     T Find(long id);
     Task<T> FindAsync(long id);
     Task<List<T>> GetAllAsync(Expression<Func<T, bool>> predicate = null);
+
+    Task<List<T>> GetAllAsync(
+        Expression<Func<T, bool>> predicate = null,
+        params Expression<Func<T, object>>[] includes);
     Task<T> GetItemAsync(Expression<Func<T, bool>> predicate);
     List<T> Get(Expression<Func<T, bool>> predicate);
     Task<T> FindOrThrowAsync(long id);

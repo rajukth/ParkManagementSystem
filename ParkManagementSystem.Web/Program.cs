@@ -22,7 +22,9 @@ builder.Services.AddAuthentication("AppCookie")
     .AddCookie("AppCookie", options =>
     {
         options.LoginPath = "/login";
-        options.AccessDeniedPath = "/accessDenied";
+        options.AccessDeniedPath = "/accessdenied";
+        options.LogoutPath = "/logout";
+        options.ReturnUrlParameter = "returnUrl";
         options.ExpireTimeSpan = TimeSpan.FromHours(8);
     });
 
@@ -44,6 +46,7 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseMiddleware<UserRoleMiddleware>();   // optional if you want claims
 app.UseAuthorization();
+app.UseStatusCodePagesWithReExecute("/Home/NotFound");
 
 // ✔ FIXED AREA ROUTE
 app.MapControllerRoute(

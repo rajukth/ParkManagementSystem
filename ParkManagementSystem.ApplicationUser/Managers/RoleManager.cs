@@ -37,7 +37,7 @@ public class RoleManager:IRoleManager
     public async Task<List<string>> GetUserRoles(int userId)
     {
         var list = await _userRoleRepo
-            .GetAllAsync(ur => ur.UserId == userId);
+            .GetAllAsync(ur => ur.UserId == userId,x=>x.Role);
 
         return list.Select(x => x.Role.RoleName).ToList();
     }

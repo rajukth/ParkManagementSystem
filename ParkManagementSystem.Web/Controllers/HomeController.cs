@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using ParkManagementSystem.Web.Attributes;
 using ParkManagementSystem.Web.Models;
 
 namespace ParkManagementSystem.Web.Controllers;
@@ -18,7 +18,7 @@ public class HomeController : Controller
     {
         return View();
     }
-    [Authorize(Roles = "SysAdmin")]
+    [AppAuthorizeAttribute("SysAdmin")]
     public IActionResult Privacy()
     {
         return View();
@@ -28,5 +28,60 @@ public class HomeController : Controller
     public IActionResult Error()
     {
         return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+    }
+
+    public IActionResult NotFound()
+    {
+        return View();
+    }
+
+    public IActionResult Testimonial()
+    {
+        return View();
+    }
+
+    public IActionResult Team()
+    {
+        return View();
+    }
+
+    public IActionResult Package()
+    {
+        return View();
+    }
+
+    public IActionResult Attraction()
+    {
+        return View();
+    }
+
+    public IActionResult Gallery()
+    {
+        return View();
+    }
+
+    public IActionResult Feature()
+    {
+        return View();
+    }
+
+    public IActionResult Blog()
+    {
+        return View();
+    }
+
+    public IActionResult Service()
+    {
+        return View();
+    }
+
+    public IActionResult About()
+    {
+        return View();
+    }
+
+    public IActionResult Contact()
+    {
+        return View();
     }
 }

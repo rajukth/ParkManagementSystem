@@ -26,6 +26,17 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
         predicate ??= x => true;
         return _context.Set<T>().Where(predicate).ToListAsync();
     }
+    public async Task<List<T>> GetAllAsync(
+        Expression<Func<T, bool>> predicate = null,
+        params Expression<Func<T, object>>[] includes)
+    {
+        IQueryable<T> query = _context.Set<T>();
+
+        foreach (var include in includes)
+            query = query.Include(include);
+
+        return await query.Where(predicate).ToListAsync();
+    }
 
     public async Task<T> GetItemAsync(Expression<Func<T, bool>> predicate) =>
         await _context.Set<T>().FirstOrDefaultAsync(predicate);

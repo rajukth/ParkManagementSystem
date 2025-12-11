@@ -2,6 +2,7 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using ParkManagementSystem.ApplicationUser.Managers.Interfaces;
+using ParkManagementSystem.Web.Areas.Auth.Models;
 
 namespace ParkManagementSystem.Web.Areas.Auth.Controllers;
 [Area("Auth")]
@@ -17,15 +18,17 @@ public class AccountController : Controller
     }
 
     [HttpGet("login")]
-    public IActionResult Login()
+    public IActionResult Login(string? returnUrl)
     {
-        return View();
+        var model = new LoginModel();
+        model.ReturnUrl = returnUrl;
+        return View(model);
     }
 
     [HttpPost("login")]
-    public async Task<IActionResult> Login(string email, string password)
+    public async Task<IActionResult> Login(LoginModel vm)
     {
-        if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
+        if (string.IsNullOrEmpty(vm.Email) || string.IsNullOrEmpty(vm.Password))
         {
             ModelState.AddModelError("", "Email and Password are required.");
             return View();
@@ -34,39 +37,31 @@ public class AccountController : Controller
         try
         {
             var user = await _loginManager.LoginAsync(
-                email, 
-                password,
+                vm.Email, 
+                vm.Password,
                 HttpContext.Connection.RemoteIpAddress?.ToString() ?? ""
             );
 
-            // Store session 
-            HttpContext.Session.SetString("UserSessionToken", user.CurrentSessionToken ?? "");
-            HttpContext.Session.SetInt32("UserId", user.Id);
+            var userRoles = await _roleManager.GetUserRoles(user.Id);
 
-            // ------------------------------------------------------------
-            // 🔥 CREATE CLAIMS + SIGN-IN USER (IMPORTANT PART)
-            // ------------------------------------------------------------
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.Name, user.UserName),
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
             };
 
-            // get roles from your database
-            var roles = await _roleManager.GetUserRoles(user.Id);
-
-            foreach (var role in roles)
+            foreach (var role in userRoles)
             {
                 claims.Add(new Claim(ClaimTypes.Role, role));
             }
 
             var identity = new ClaimsIdentity(claims, "AppCookie");
-            var principal = new ClaimsPrincipal(identity);
+            await HttpContext.SignInAsync("AppCookie", new ClaimsPrincipal(identity));
 
-            await HttpContext.SignInAsync("AppCookie", principal);
-            // ------------------------------------------------------------
+            HttpContext.Session.SetInt32("UserId", user.Id);
+            HttpContext.Session.SetString("UserSessionToken", user.CurrentSessionToken ?? "");
 
-            return RedirectToAction("Index", "Home");
+            return vm.ReturnUrl!=null ? Redirect(vm.ReturnUrl) : RedirectToAction("Index", "Home",new {area=""});
         }
         catch
         {
@@ -140,5 +135,11 @@ public class AccountController : Controller
             ViewBag.Email = email;
             return View();
         }
+    }
+
+    [HttpGet("access-denied")]
+    public IActionResult AccessDenied()
+    {
+        return View();
     }
 }
