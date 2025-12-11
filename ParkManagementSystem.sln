@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-#
+# 
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParkManagementSystem.Web", "ParkManagementSystem.Web\ParkManagementSystem.Web.csproj", "{C4032DDF-5CE9-4DD9-9EB4-422525C2A29E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParkManagementSystem.Infrastructure", "ParkManagementSystem.Infrastructure\ParkManagementSystem.Infrastructure.csproj", "{8CC90A66-4186-4E17-8E8F-AE9E134B2AAE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParkManagementSystem.Core", "ParkManagementSystem.Core\ParkManagementSystem.Core.csproj", "{639B70DA-1D3D-45C6-8964-EDB62124D65B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParkManagementSystem.ApplicationUser", "ParkManagementSystem.ApplicationUser\ParkManagementSystem.ApplicationUser.csproj", "{4CC4214A-BB36-4D1F-94B4-8A52DD97B0DF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,5 +27,9 @@ Global
 		{639B70DA-1D3D-45C6-8964-EDB62124D65B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{639B70DA-1D3D-45C6-8964-EDB62124D65B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{639B70DA-1D3D-45C6-8964-EDB62124D65B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4CC4214A-BB36-4D1F-94B4-8A52DD97B0DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4CC4214A-BB36-4D1F-94B4-8A52DD97B0DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4CC4214A-BB36-4D1F-94B4-8A52DD97B0DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4CC4214A-BB36-4D1F-94B4-8A52DD97B0DF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

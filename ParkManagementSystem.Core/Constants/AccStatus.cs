@@ -4,8 +4,8 @@ namespace ParkManagementSystem.Core.Constants;
 
 public class AccStatus:ConstantHelper
 {
-    public const char Approved = 'A';
-    public const char UnApproved = 'U';
-    public const char Suspended = 'S';
-    public const char Deleted = 'D';
+    public const string Approved = "A";
+    public const string Pending = "P";
+    public const string Suspended = "S";
+    public const string Deleted = "D";
 }

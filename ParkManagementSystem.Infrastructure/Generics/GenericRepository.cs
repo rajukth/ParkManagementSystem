@@ -1,5 +1,6 @@
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
+using ParkManagementSystem.Infrastructure.DataContext;
 using ParkManagementSystem.Infrastructure.Exceptions;
 using ParkManagementSystem.Infrastructure.Generics.Interface;
 
@@ -7,10 +8,10 @@ namespace ParkManagementSystem.Infrastructure.Generics;
 
 public class GenericRepository<T> : IGenericRepository<T> where T : class
 {
-    private readonly DbContext _context;
+    private readonly ApplicationDbContext _context;
     private readonly DbSet<T> _dbSet;
 
-    public GenericRepository(DbContext context)
+    public GenericRepository(ApplicationDbContext context)
     {
         _context = context;
         _dbSet = context.Set<T>();

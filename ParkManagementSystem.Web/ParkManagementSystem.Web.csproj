@@ -11,11 +11,18 @@
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         <PrivateAssets>all</PrivateAssets>
       </PackageReference>
+      <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.18" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\ParkManagementSystem.Core\ParkManagementSystem.Core.csproj" />
       <ProjectReference Include="..\ParkManagementSystem.Infrastructure\ParkManagementSystem.Infrastructure.csproj" />
+      <ProjectReference Include="..\ParkManagementSystem.ApplicationUser\ParkManagementSystem.ApplicationUser.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Areas\Auth\Data\" />
+      <Folder Include="Areas\Auth\Models\" />
     </ItemGroup>
 
 </Project>
