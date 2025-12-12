@@ -3,6 +3,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using ParkManagementSystem.ApplicationUser.Managers;
 using ParkManagementSystem.ApplicationUser.Managers.Interfaces;
+using ParkManagementSystem.ApplicationUser.Provider;
+using ParkManagementSystem.ApplicationUser.Provider.Interface;
 using ParkManagementSystem.ApplicationUser.Repositories;
 using ParkManagementSystem.ApplicationUser.Repositories.Interfaces;
 using ParkManagementSystem.ApplicationUser.Services;
@@ -34,6 +36,9 @@ public static class DiConfig
         /*Services*/
         services.AddScoped<IUserService,UserService>()
             .AddScoped<IRoleService,RoleService>()
+            ;
+        /*Provider*/
+        services.AddScoped<ICurrentUserProvider,CurrentUserProvider>()
             ;
         
         

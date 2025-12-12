@@ -71,7 +71,18 @@ public class AccountController : Controller
             HttpContext.Session.SetInt32("UserId", user.Id);
             HttpContext.Session.SetString("UserSessionToken", user.CurrentSessionToken ?? "");
 
-            return vm.ReturnUrl!=null ? Redirect(vm.ReturnUrl) : RedirectToAction("Index", "Home",new {area=""});
+            if (userRoles.Contains("SysAdmin") || userRoles.Contains("Admin"))
+            {
+                if (!string.IsNullOrEmpty(vm.ReturnUrl))
+                {
+                    if (vm.ReturnUrl.Contains("/Admin/", StringComparison.OrdinalIgnoreCase))
+                    {
+                        return Redirect(vm.ReturnUrl);
+                    }
+                }
+                return RedirectToAction("Index", "Home", new { area = "Admin" });
+            }
+            return !string.IsNullOrEmpty(vm.ReturnUrl) ? Redirect(vm.ReturnUrl) : RedirectToAction("Index", "Home",new {area=""});
         }
         catch (Exception ex)
         {
@@ -87,7 +98,7 @@ public class AccountController : Controller
     {
         await HttpContext.SignOutAsync("AppCookie");
         HttpContext.Session.Clear();
-        return RedirectToAction("Login");
+        return RedirectToAction("Index","Home",new {area=""});
     }
 
     // ---------- Password Reset Request ----------

@@ -1,0 +1,7 @@
+@{
+    ViewBag.Title = "title";
+    bool isAdminLayout = ViewData["IsAdminLayout"] as bool? ?? false;
+    Layout =  isAdminLayout?"_AdminLayout":"_Layout";
+}
+
+Access Denied

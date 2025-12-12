@@ -1,5 +1,6 @@
 using ParkManagementSystem.ApplicationUser;
 using ParkManagementSystem.Infrastructure;
+using ParkManagementSystem.Web.Helper;
 using ParkManagementSystem.Web.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,14 +10,14 @@ builder.Services.BaseConfig()
 
 // MVC
 builder.Services.AddControllersWithViews();
-
+builder.Services.AddHttpContextAccessor();
 // Session
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options =>
 {
     options.IdleTimeout = TimeSpan.FromHours(8);
 });
-
+builder.Services.AddScoped<ILayoutHelper, LayoutHelper>();
 // Cookie Auth
 builder.Services.AddAuthentication("AppCookie")
     .AddCookie("AppCookie", options =>

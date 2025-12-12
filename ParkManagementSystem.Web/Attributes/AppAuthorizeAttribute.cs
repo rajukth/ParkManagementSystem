@@ -5,11 +5,12 @@ namespace ParkManagementSystem.Web.Attributes;
 
 public class AppAuthorizeAttribute : Attribute, IAuthorizationFilter
 {
-    private readonly string _role;
+    private readonly List<string> _roles;
 
-    public AppAuthorizeAttribute(string role)
+    public AppAuthorizeAttribute(string roles)
     {
-        _role = role;
+        _roles = roles.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+            .ToList();
     }
 
     public void OnAuthorization(AuthorizationFilterContext context)
@@ -27,10 +28,12 @@ public class AppAuthorizeAttribute : Attribute, IAuthorizationFilter
         
         var userRoles = context.HttpContext.Items["UserRoles"] as List<string>;
 
-        if (userRoles == null || !userRoles.Contains(_role))
+        if (userRoles == null || !_roles.Any(r => userRoles.Contains(r)))
         {
             context.Result = new RedirectToActionResult(
-                "AccessDenied","Account", new { area = "auth" });
+                "AccessDenied",
+                "Account",
+                new { area = "auth" });
         }
     }
 }
