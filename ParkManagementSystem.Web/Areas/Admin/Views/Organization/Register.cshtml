@@ -23,15 +23,23 @@
               <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="col-12 form-group">
-              <label asp-for="Name">Organization's Address</label>
+              <label asp-for="Address">Organization's Address</label>
               <input
                 asp-for="Address"
                 class="form-control"
                 placeholder="Enter organization's full address"/>
               <span asp-validation-for="Address" class="text-danger"></span>
+            </div> 
+            <div class="col-12 form-group">
+              <label asp-for="Slogan">Organization's Address</label>
+              <input
+                asp-for="Slogan"
+                class="form-control"
+                placeholder="Enter organization's full address"/>
+              <span asp-validation-for="Slogan" class="text-danger"></span>
             </div>
             <div class="col-4 form-group">
-              <label asp-for="Name">Contact Person</label>
+              <label asp-for="ContactPerson">Contact Person</label>
               <input
                 asp-for="ContactPerson"
                 class="form-control"
@@ -39,7 +47,7 @@
               <span asp-validation-for="ContactPerson" class="text-danger"></span>
             </div>
             <div class="col-4 form-group">
-              <label asp-for="Name">Contact No.</label>
+              <label asp-for="ContactNumber">Contact No.</label>
               <input
                 asp-for="ContactNumber"
                 class="form-control"
@@ -47,9 +55,9 @@
               <span asp-validation-for="ContactNumber" class="text-danger"></span>
             </div>
             <div class="col-4 form-group">
-              <label asp-for="Name">Email</label>
+              <label asp-for="Email">Email</label>
               <input
-                asp-for="ContactNumber"
+                asp-for="Email"
                 class="form-control"
                 placeholder="Enter organization's Email"/>
               <small id="emailHelp2" class="form-text text-muted">Email is used to register administrator user.</small>

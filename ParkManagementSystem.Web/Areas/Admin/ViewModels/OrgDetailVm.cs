@@ -25,4 +25,5 @@ public class OrgDetailVm
     [MaxFileSize(200 * 1024, ErrorMessage = "Logo size must not exceed 200KB")]
     [AllowedExtensions(new[] { ".jpg", ".jpeg", ".png" }, ErrorMessage = "Only JPG, JPEG, PNG files are allowed.")]
     public IFormFile? Logo { get; set; }
+    public string? Slogan { get; set; }
 }

@@ -6911,3 +6911,19 @@ body {
     font-size: 18px !important; } }
 
 /*# sourceMappingURL=kaiadmin.css.map */
+.img-preview {
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  object-fit: cover;
+  display: inline-block;
+}
+.hidden-file {
+  display: none;
+}
+.file-upload-btn {
+  padding: 8px 15px;
+  background: #007bff;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+}

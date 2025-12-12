@@ -1,4 +1,4 @@
-namespace ParkManagementSystem.Web.Helper;
+namespace ParkManagementSystem.Web.Helpers;
 
 public static class ImageHelper
 {
