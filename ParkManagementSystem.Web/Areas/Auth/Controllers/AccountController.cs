@@ -56,16 +56,26 @@ public class AccountController : Controller
             }
 
             var identity = new ClaimsIdentity(claims, "AppCookie");
-            await HttpContext.SignInAsync("AppCookie", new ClaimsPrincipal(identity));
+            var authProps = new AuthenticationProperties
+            {
+                IsPersistent = vm.RememberMe,  
+            };
+
+            if (vm.RememberMe)
+            {
+                authProps.ExpiresUtc = DateTime.UtcNow.AddDays(7); // store for 7 days (change as needed)
+            }
+
+            await HttpContext.SignInAsync("AppCookie", new ClaimsPrincipal(identity),authProps);
 
             HttpContext.Session.SetInt32("UserId", user.Id);
             HttpContext.Session.SetString("UserSessionToken", user.CurrentSessionToken ?? "");
 
             return vm.ReturnUrl!=null ? Redirect(vm.ReturnUrl) : RedirectToAction("Index", "Home",new {area=""});
         }
-        catch
+        catch (Exception ex)
         {
-            ModelState.AddModelError("", "Invalid credentials or account locked.");
+            ModelState.AddModelError("", ex.Message);
             return View();
         }
     }
@@ -73,8 +83,9 @@ public class AccountController : Controller
 
     // ---------- Logout ----------
     [HttpGet("logout")]
-    public IActionResult Logout()
+    public async Task<IActionResult> Logout()
     {
+        await HttpContext.SignOutAsync("AppCookie");
         HttpContext.Session.Clear();
         return RedirectToAction("Login");
     }
