@@ -11,13 +11,14 @@ namespace ParkManagementSystem.ApplicationUser.Provider;
 public class CurrentUserProvider:ICurrentUserProvider
 {
     private readonly IHttpContextAccessor _httpContextAccessor;
-    private readonly ApplicationDbContext _dbContext;
+    private readonly IUserRepository _userRepository;
+    
     private CurrentUser? _cachedUser;
 
-    public CurrentUserProvider(IHttpContextAccessor httpContextAccessor, ApplicationDbContext dbContext)
+    public CurrentUserProvider(IHttpContextAccessor httpContextAccessor, IUserRepository userRepository)
     {
         _httpContextAccessor = httpContextAccessor;
-        _dbContext = dbContext;
+        _userRepository = userRepository;
     }
 
     public async Task<CurrentUser> GetCurrentUserAsync()
@@ -42,7 +43,7 @@ public class CurrentUserProvider:ICurrentUserProvider
         }
 
         // Fetch user with roles from DB
-        var user = await _dbContext.Users
+        var user = await _userRepository.GetBaseQueryable()
             .Include(u => u.UserRoles)
             .ThenInclude(ur => ur.Role)
             .FirstOrDefaultAsync(u => u.Id == userId);
@@ -91,7 +92,7 @@ public class CurrentUserProvider:ICurrentUserProvider
         }
 
         // Fetch user with roles from DB
-        var user = _dbContext.Users
+        var user = _userRepository.GetBaseQueryable()
             .Include(u => u.UserRoles)
             .ThenInclude(ur => ur.Role)
             .FirstOrDefault(u => u.Id == userId);

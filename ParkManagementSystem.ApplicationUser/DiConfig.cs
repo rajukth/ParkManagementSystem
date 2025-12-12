@@ -31,11 +31,13 @@ public static class DiConfig
         services.AddScoped<IUserRepository, UserRepository>()
             .AddScoped<IUserRoleRepository, UserRoleRepository>()
             .AddScoped<IRoleRepository, RoleRepository>()
+            .AddScoped<IOrganizationRepository, OrganizationRepository>()
             ;
         
         /*Services*/
         services.AddScoped<IUserService,UserService>()
             .AddScoped<IRoleService,RoleService>()
+            .AddScoped<IOrganizationService,OrganizationService>()
             ;
         /*Provider*/
         services.AddScoped<ICurrentUserProvider,CurrentUserProvider>()

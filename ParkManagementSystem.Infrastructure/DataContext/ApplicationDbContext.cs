@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using ParkManagementSystem.Core;
 using ParkManagementSystem.Core.Entities.ApplicationUser;
 
 namespace ParkManagementSystem.Infrastructure.DataContext;
@@ -9,28 +10,10 @@ public class ApplicationDbContext : DbContext
         : base(options)
     {
     }
-    public DbSet<User> Users { get; set; }
-    public DbSet<Role> Roles { get; set; }
-    public DbSet<UserRole> UserRoles { get; set; }
-    
-    
-    
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
+        modelBuilder.RegisterCoreEntities();
 
-        // Composite key for UserRole
-        modelBuilder.Entity<UserRole>()
-            .HasKey(ur => new { ur.UserId, ur.RoleId });
-
-        modelBuilder.Entity<UserRole>()
-            .HasOne(ur => ur.User)
-            .WithMany(u => u.UserRoles)
-            .HasForeignKey(ur => ur.UserId);
-
-        modelBuilder.Entity<UserRole>()
-            .HasOne(ur => ur.Role)
-            .WithMany(r => r.UserRoles)
-            .HasForeignKey(ur => ur.RoleId);
     }
 }
