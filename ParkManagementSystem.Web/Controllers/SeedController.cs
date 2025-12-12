@@ -44,7 +44,7 @@ public class SeedController : Controller
     private async Task SeedUser()
     {
         var sysAdminRole = await _roleService.CreateRoleAsync("SysAdmin");
-        var existingAdmin = await _userRepository.UserExists("admin@example.com");
+        var existingAdmin = await _userRepository.UserExists("admin@gmail.com");
         if (!existingAdmin)
         {
             var adminUser = new User

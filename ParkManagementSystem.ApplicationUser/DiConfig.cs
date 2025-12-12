@@ -1,3 +1,4 @@
+using System.Net.Sockets;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -25,6 +26,7 @@ public static class DiConfig
         /*manager*/
         services.AddScoped<IUserLoginManager,UserLoginManager>()
             .AddScoped<IRoleManager,RoleManager>()
+            .AddScoped<IUserManager,UserManager>()
             ;
         
         /*Repositories*/

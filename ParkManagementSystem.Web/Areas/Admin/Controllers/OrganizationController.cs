@@ -1,6 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
+using ParkManagementSystem.ApplicationUser.Managers;
+using ParkManagementSystem.ApplicationUser.Managers.Interfaces;
 using ParkManagementSystem.ApplicationUser.Repositories.Interfaces;
 using ParkManagementSystem.ApplicationUser.Services.Interfaces;
+using ParkManagementSystem.Core.Entities.ApplicationUser;
 using ParkManagementSystem.Core.Entities.Organization;
 using ParkManagementSystem.Web.Areas.Admin.ViewModels;
 using ParkManagementSystem.Web.Attributes;
@@ -17,14 +20,16 @@ public class OrganizationController : Controller
     private readonly IOrganizationService _organizationService;
 
     private readonly IWebHostEnvironment _env;
+    private readonly IUserManager _userManager;
 
     // GET
     public OrganizationController(IOrganizationRepository organizationRepository,
-        IOrganizationService organizationService, IWebHostEnvironment env)
+        IOrganizationService organizationService, IWebHostEnvironment env, IUserManager userManager)
     {
         _organizationRepository = organizationRepository;
         _organizationService = organizationService;
         _env = env;
+        _userManager = userManager;
     }
 
     public async Task<IActionResult> Index()
@@ -84,6 +89,8 @@ public class OrganizationController : Controller
                 var path = await ImageHelper.UploadImageAsync(vm.Logo, "uploads/org", _env);
                 await _organizationService.UploadLogoAsync(path);
             }
+
+            await CreateOrgUser(org);
         }
         catch (Exception e)
         {
@@ -92,6 +99,18 @@ public class OrganizationController : Controller
         return RedirectToAction(nameof(Index));
     }
 
+    private async Task CreateOrgUser(Organization org)
+    {
+        var adminUser = new User
+        {
+            UserName = "Office",
+            Email = org.Email,
+            PasswordHash = UserLoginManager.HashPassword("Admin@123"),
+            AccountStatus = Core.Constants.AccStatus.Approved,
+            RecStatus = Core.Constants.RecStatus.Active
+        };
+        await _userManager.CreateUserWithRoles(adminUser,new List<string>{"Admin"});
+    }
     [HttpPost]
     public async Task<IActionResult> UploadLogo(IFormFile? logo)
     {

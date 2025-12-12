@@ -47,7 +47,10 @@ public class AccountController : Controller
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.Name, user.UserName),
-                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
+                new Claim(ClaimTypes.Email, user.Email),
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                new Claim("ProfileImage", string.IsNullOrEmpty(user.ProfileUrl) ? "/admin/assets/img/profile.jpg" : user.ProfileUrl)
+
             };
 
             foreach (var role in userRoles)

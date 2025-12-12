@@ -24,4 +24,5 @@ public class User
     public DateTime? PasswordResetTokenExpiry { get; set; }
     
     public ICollection<UserRole> UserRoles { get; set; }
+    public string? ProfileUrl { get; set; }
 }

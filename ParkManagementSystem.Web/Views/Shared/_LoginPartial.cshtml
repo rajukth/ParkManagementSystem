@@ -1,7 +1,16 @@
 @using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using System.Security.Claims
 @{
     // Get the current layout name
     bool isAdminLayout = ViewData["IsAdminLayout"] as bool? ?? false;
+    var isAuthenticated = User?.Identity?.IsAuthenticated == true;
+
+    // Get user details from claims
+    var userName = User?.FindFirstValue(ClaimTypes.Name) ?? "";
+    var userEmail = User?.FindFirstValue(ClaimTypes.Email) ?? "";
+    var profileUrl = User?.FindFirstValue("ProfileImage") ?? "/admin/assets/img/profile.jpg"; // default
+
 }
 
 @if (isAdminLayout)
@@ -22,7 +31,7 @@
         </div>
         <span class="profile-username">
           <span class="op-7">Hi,</span>
-          <span class="fw-bold">@User.Identity.Name</span>
+          <span class="fw-bold">@userName</span>
         </span>
       </a>
       <ul class="dropdown-menu dropdown-user animated fadeIn">
@@ -36,8 +45,8 @@
                   class="avatar-img rounded"/>
               </div>
               <div class="u-text">
-                <h4>Hizrian</h4>
-                <p class="text-muted">hello@example.com</p>
+                <h4>@userName</h4>
+                <p class="text-muted">@userEmail</p>
                 <a
                   href="profile.html"
                   class="btn btn-xs btn-secondary btn-sm">View Profile</a
@@ -66,7 +75,7 @@ else
     {
         <div class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                @User.Identity.Name
+                @userName
             </a>
             <div class="dropdown-menu m-0">
                 <a class="dropdown-item" href="/Profile">My Profile</a>
