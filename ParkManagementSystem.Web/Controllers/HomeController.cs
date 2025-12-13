@@ -18,7 +18,6 @@ public class HomeController : Controller
     {
         return View();
     }
-    [AppAuthorizeAttribute("SysAdmin")]
     public IActionResult Privacy()
     {
         return View();

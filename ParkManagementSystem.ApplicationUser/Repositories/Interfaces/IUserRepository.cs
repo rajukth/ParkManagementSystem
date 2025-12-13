@@ -7,4 +7,5 @@ namespace ParkManagementSystem.ApplicationUser.Repositories.Interfaces;
 public interface IUserRepository:IGenericRepository<User>
 {
     Task<bool> UserExists(string username);
+    Task<List<User>> GetActiveUsers(bool includeSysAdmin=false);
 }

@@ -2,6 +2,7 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using ParkManagementSystem.ApplicationUser.Managers.Interfaces;
+using ParkManagementSystem.Core.Constants;
 using ParkManagementSystem.Web.Areas.Auth.Models;
 
 namespace ParkManagementSystem.Web.Areas.Auth.Controllers;
@@ -74,7 +75,7 @@ public class AccountController : Controller
             HttpContext.Session.SetInt32("UserId", user.Id);
             HttpContext.Session.SetString("UserSessionToken", user.CurrentSessionToken ?? "");
 
-            if (userRoles.Contains("SysAdmin") || userRoles.Contains("Admin"))
+            if (userRoles.Contains(RoleConstant.SysAdmin) || userRoles.Contains(RoleConstant.Admin))
             {
                 if (!string.IsNullOrEmpty(vm.ReturnUrl))
                 {

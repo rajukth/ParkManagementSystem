@@ -1,4 +1,5 @@
 using ParkManagementSystem.ApplicationUser.Provider.Interface;
+using ParkManagementSystem.Core.Constants;
 
 namespace ParkManagementSystem.Web.Helper;
 public interface ILayoutHelper
@@ -23,10 +24,10 @@ public class LayoutHelper : ILayoutHelper
             return "_Layout"; // default layout for guest
 
         // You can prioritize roles if user has multiple
-        if (currentUser.Roles.Contains("SysAdmin") || currentUser.Roles.Contains("Admin"))
+        if (currentUser.Roles.Contains(RoleConstant.SysAdmin) || currentUser.Roles.Contains(RoleConstant.Admin))
             return "_AdminLayout";
 
-        if (currentUser.Roles.Contains("Manager"))
+        if (currentUser.Roles.Contains(RoleConstant.Manager))
             return "_ManagerLayout";
 
         // Default layout for regular authenticated users

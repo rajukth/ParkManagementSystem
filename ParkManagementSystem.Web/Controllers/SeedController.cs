@@ -4,6 +4,7 @@ using ParkManagementSystem.ApplicationUser.Managers;
 using ParkManagementSystem.ApplicationUser.Managers.Interfaces;
 using ParkManagementSystem.ApplicationUser.Repositories.Interfaces;
 using ParkManagementSystem.ApplicationUser.Services.Interfaces;
+using ParkManagementSystem.Core.Constants;
 using ParkManagementSystem.Core.Entities.ApplicationUser;
 
 namespace ParkManagementSystem.Web.Controllers;
@@ -43,7 +44,7 @@ public class SeedController : Controller
 
     private async Task SeedUser()
     {
-        var sysAdminRole = await _roleService.CreateRoleAsync("SysAdmin");
+        var sysAdminRole = await _roleService.CreateRoleAsync(RoleConstant.SysAdmin);
         var existingAdmin = await _userRepository.UserExists("admin@gmail.com");
         if (!existingAdmin)
         {
@@ -62,9 +63,12 @@ public class SeedController : Controller
 
     private async Task SeedRole()
     {
-        var admin = await _roleService.CreateRoleAsync("Admin");
-        var staff = await _roleService.CreateRoleAsync("Staff");
-        var user = await _roleService.CreateRoleAsync("User");
+        var admin = await _roleService.CreateRoleAsync(RoleConstant.Admin);
+        var manager = await _roleService.CreateRoleAsync(RoleConstant.Manager);
+        var accountant = await _roleService.CreateRoleAsync(RoleConstant.Accountant);
+        var user= await _roleService.CreateRoleAsync(RoleConstant.User);
+        var guest = await _roleService.CreateRoleAsync(RoleConstant.Guest);
+        var storekeeper = await _roleService.CreateRoleAsync(RoleConstant.StoreKeeper);
     }
 
 }

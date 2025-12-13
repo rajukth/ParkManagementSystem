@@ -4,9 +4,9 @@ namespace ParkManagementSystem.Core.Helper
 {
     public class ConstantHelper
     {
-        private static readonly Dictionary<(Type, char), string> Cache = new Dictionary<(Type, char), string>();
+        private static readonly Dictionary<(Type, string), string> Cache = new Dictionary<(Type, string), string>();
 
-        public static string GetName<T>(char value) where T : class
+        public static string GetName<T>(string value) where T : class
         {
             var key = (typeof(T), value);
             if (Cache.TryGetValue(key, out var name))
@@ -19,7 +19,7 @@ namespace ParkManagementSystem.Core.Helper
 
             foreach (var field in fields)
             {
-                if ((char)field.GetValue(null) == value)
+                if (field.GetValue(null) == value)
                 {
                     name = field.Name;
                     Cache[key] = name;

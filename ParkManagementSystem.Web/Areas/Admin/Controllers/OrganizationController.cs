@@ -3,6 +3,7 @@ using ParkManagementSystem.ApplicationUser.Managers;
 using ParkManagementSystem.ApplicationUser.Managers.Interfaces;
 using ParkManagementSystem.ApplicationUser.Repositories.Interfaces;
 using ParkManagementSystem.ApplicationUser.Services.Interfaces;
+using ParkManagementSystem.Core.Constants;
 using ParkManagementSystem.Core.Entities.ApplicationUser;
 using ParkManagementSystem.Core.Entities.Organization;
 using ParkManagementSystem.Web.Areas.Admin.ViewModels;
@@ -13,7 +14,7 @@ using ParkManagementSystem.Web.Helpers;
 namespace ParkManagementSystem.Web.Areas.Admin.Controllers;
 
 [Area("Admin")]
-[AppAuthorize("SysAdmin,Admin")]
+[AppAuthorize($"{RoleConstant.SysAdmin},{RoleConstant.Admin}")]
 public class OrganizationController : Controller
 {
     private readonly IOrganizationRepository _organizationRepository;
